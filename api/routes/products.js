@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+
 router.get('/', (req, res, next) => {
     res.status(200).json({
         message: 'Handling GET requests to /products'
@@ -26,21 +27,18 @@ router.post('/', (req, res, next) => {
         });
     }
 });
-router.PATCH('/:productID', (req, res, next) => {
+router.patch('/:productID', (req, res, next) => {
     res.status(200).json({
         message: 'updateproduct'
     });
 
 });
-router.DELETE('/:productID', (req, res, next) => {
+router.delete('/:productID', (req, res, next) => {
     res.status(200).json({
         message: 'deleted product'
     });
 
 });
 
-   
 
-
-    
 module.exports=router; 
