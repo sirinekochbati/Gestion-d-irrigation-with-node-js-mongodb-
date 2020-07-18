@@ -1,15 +1,27 @@
 {
-  "name": "node.test",
+  "name": "rest-shop",
   "version": "1.0.0",
-  "description": "",
+  "description": "a node.js RESTFUL API Tutorial Project ",
   "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
   "dependencies": {
     "express": "^4.17.1"
   },
-  "devDependencies": {},
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "devDependencies": {
+    "lite-server": "^2.5.4",
+    "nodemon": "^2.0.4"
   },
   "author": "sirine kochbati",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/sirinekochbati/node.test.git"
+  },
+  "bugs": {
+    "url": "https://gitlab.com/sirinekochbati/node.test/issues"
+  },
+  "homepage": "https://gitlab.com/sirinekochbati/node.test#readme"
 }
