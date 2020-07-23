@@ -8,7 +8,8 @@
     "start": "nodemon server.js"
   },
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "mongoose": "^5.9.25"
   },
   "devDependencies": {
     "lite-server": "^2.5.4",

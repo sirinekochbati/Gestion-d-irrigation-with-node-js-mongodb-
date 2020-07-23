@@ -5,9 +5,13 @@ const bodyParser= require('body-parser');
 const mongoose= require ('mongoose');
 mongoose.connect('mongodb+srv://node-shop:' + 
 process.env.MONGO_ATLAS_PW +
- ' @cluster0.pww42.mongodb.net/<dbname>?retryWrites=true&w=majority',
+ '@cluster0.pww42.mongodb.net/shopping?retryWrites=true&w=majority',
  {
-     useMongoClient: true
+     //useMongoClient: true
+     useNewUrlParser: true, // new parameters
+    useUnifiedTopology: true
+     
+     
  }
  );
 
