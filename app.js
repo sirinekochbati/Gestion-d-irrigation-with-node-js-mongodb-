@@ -1,8 +1,11 @@
 const express = require ('express');
+var compression = require ('compression');
 const app = express ();
+const cors = require('cors');
 const morgan = require('morgan');
 const bodyParser= require('body-parser');
 const mongoose= require ('mongoose');
+require('dotenv').config();
 mongoose.connect('mongodb+srv://node-shop:' + 
 process.env.MONGO_ATLAS_PW +
  '@cluster0.pww42.mongodb.net/shopping?retryWrites=true&w=majority',
@@ -14,9 +17,9 @@ process.env.MONGO_ATLAS_PW +
      
  }
  );
-
-
-
+app.use(cors());
+app.use(compression());
+app.use('/uploads', express.static('uploads'));
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.use((req, res, next) => {
@@ -32,14 +35,44 @@ app.use((req, res, next) => {
     }
     next();
 });
-const productRoutes = require('./api/routes/products');
-const orderRoutes = require('./api/routes/orders');
+
+const parcelleRoutes = require('./api/routes/parcelle');
+const moteurRoutes = require('./api/routes/moteur');
+const flotteurRoutes = require('./api/routes/flotteur');
+const userRoutes = require ('./api/routes/user');
+const bassinRoutes = require ('./api/routes/bassin');
+const electrovanneRoutes = require ('./api/routes/electrovanne');
+const pressostatRoutes = require ('./api/routes/pressostat');
+const reseautuyauterieRoutes = require ('./api/routes/reseautuyauterie');
+const sondageRoutes = require ('./api/routes/sondage');
+const sondesaturationRoutes = require ('./api/routes/sondesaturation');
+const stationfertilizationRoutes = require ('./api/routes/stationfertilization');
+const stationfiltrageRoutes = require ('./api/routes/stationfiltrage');
+const parcelleElementaireRoutes = require('./api/routes/parcelleElementaire');
+
+
+
 app.use(morgan('dev'));
 
 
 //routes which should handle requests
-app.use ('/products', productRoutes);
-app.use ('/orders', orderRoutes);
+
+app.use('/electrovanne', electrovanneRoutes);
+app.use('/stationfiltrage', stationfiltrageRoutes);
+app.use('/stationfertilization', stationfertilizationRoutes);
+app.use('/sondesaturation', sondesaturationRoutes);
+app.use('/sondage', sondageRoutes);
+app.use('/reseautuyauterie', reseautuyauterieRoutes);
+app.use('/pressostat', pressostatRoutes);
+app.use('/parcelle', parcelleRoutes);
+app.use('/moteur', moteurRoutes);
+app.use('/flotteur', flotteurRoutes);
+app.use('/bassin',bassinRoutes);
+app.use('/parcelleElementaire',parcelleElementaireRoutes);
+app.use('/sondage',sondageRoutes);
+
+
+app.use ('/user', userRoutes);
 app.use((req, res, next) =>{
     const error = new Error('Not found');
     error.status= 404 ;
