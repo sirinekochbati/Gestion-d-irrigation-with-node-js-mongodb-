@@ -3,6 +3,7 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const bcrypt = require ('bcrypt');
 
+
 const checkAuth = require('../middleware/check-auth');
 const jwt = require ('jsonwebtoken');
 const usercontroller= require ('../controllers/user');
@@ -10,6 +11,7 @@ const path = require('path');
 const multer = require('multer');
 const User = require ("../models/user");
 const ParcelleElementaire = require ("../models/parcelleElementaire");
+const user = require('../models/user');
 
 
 const storage = multer.diskStorage({
@@ -40,13 +42,13 @@ const upload = multer ({
 
 router.post("/signup", upload.single('file'), usercontroller.user_postsignup);
 router.post ('/login', usercontroller.user_postlogin);
-router.delete('/:userID', usercontroller.user_delete);
-router.get("/", usercontroller.usergetall );
-router.get("/:userId", usercontroller.getuser);
-router.patch("/:userId",  usercontroller.userupdate);
-router.delete("/",  usercontroller.userdeleteall);
+router.delete('/:userID', usercontroller.grantAccess('deleteAny', 'user'), usercontroller.user_delete);
+router.get("/", checkAuth,  usercontroller.grantAccess('readAny', 'user'),usercontroller.usergetall );
+router.get("/:userId", checkAuth, usercontroller.grantAccessifown('readOwn','user'), usercontroller.getuser);
+router.patch("/:userId", checkAuth, usercontroller.grantAccessifown('updateOwn','user'), usercontroller.userupdate);
+router.delete("/", checkAuth, usercontroller.grantAccess('deleteAny', 'user'),  usercontroller.userdeleteall);
 router.post("/resetpassword", usercontroller.resetpassword);
-router.post("/:userId/parcelle", usercontroller.addparcelleElementairetouser);
-router.get("/:userId/parcelle",usercontroller.getparcelleElementaireByUser);
+router.post("/:userId/parcelle",checkAuth,usercontroller.grantAccess('createAny', 'parcelleElementairetoUser'), usercontroller.addparcelleElementairetouser);
+router.get("/:userId/parcelle",checkAuth,usercontroller.grantAccess('readAny', 'parcelleElementaireByUser'),  usercontroller.getparcelleElementaireByUser);
 
 module.exports= router; 

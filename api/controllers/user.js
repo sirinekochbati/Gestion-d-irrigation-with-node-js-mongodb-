@@ -12,6 +12,7 @@ const Parcelle = require ("../models/parcelle");
 const Stationfertilization = require ("../models/stationfertilization");
 const Electrovanne = require ("../models/electrovanne");
 const Sondesaturation = require ("../models/sondesaturation");
+const {roles} = require ('../roles');
 
 
 
@@ -105,7 +106,9 @@ exports.user_postlogin = (req,res,next) => {
                 }
                 );
                 return res.status(200).json({
+                 
                    message: 'auth successful',
+                   data: {email: user[0].email, role: user[0].role},
                    token: token
                 });
             }
@@ -253,3 +256,38 @@ exports.resetpassword = async (req, res, next) => {
 }
 
 
+exports.grantAccess = function(action, resource) {
+    return async (req, res, next) => {
+     try {
+      const permission = roles.can(req.body.role)[action](resource);
+      if (!permission.granted) {
+       return res.status(401).json({
+        error: "You don't have enough permission to perform this action"
+       });
+      }
+      next()
+     } catch (error) {
+      next(error)
+     }
+    }
+   }
+
+   exports.grantAccessifown = function(action, resource) {
+    return async (req, res, next) => {
+     try {
+      const realUserId= req.body.userId;
+      const targetUserId= req.params.userId;
+
+      const permission = ((realUserId===targetUserId)&&(roles.can(req.body.role)[action](resource)))|| ((req.body.role==="admin")&&(roles.can(req.body.role)[action](resource)));
+      if (!permission.granted) {
+       return res.status(401).json({
+        error: "You don't have enough permission to perform this action"
+       });
+      }
+      next()
+     } catch (error) {
+      next(error)
+     }
+    }
+   }
+   
