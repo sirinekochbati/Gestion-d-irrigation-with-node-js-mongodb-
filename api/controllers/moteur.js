@@ -2,6 +2,8 @@ const mongoose = require('mongoose');
 const express = require('express');
 const router = express.Router();
 const Moteur = require("../models/moteur");
+const Pressostat = require("../models/pressostat");
+const Reseautuyauterie = require("../models/reseautuyauterie");
 
 exports.moteurgetall = async (req, res, next) => {
     const moteur = await Moteur.find({});
@@ -41,4 +43,38 @@ exports.deletemoteur = async (req, res, next) => {
 exports.deleteAll = async (req, res, next) => {
     const moteur = await Moteur.deleteMany();
     res.status(200).json('success');
+}
+
+exports.addreseautuyauterietomoteur =  async (req, res, next) => { 
+    const reseautuyauterie = new Reseautuyauterie (req.body); 
+    
+    const findmoteur = await Moteur.findById(req.params.moteurId);
+    reseautuyauterie.moteur= findmoteur;
+    await reseautuyauterie.save();
+    findmoteur.reseautuyauteries.push(reseautuyauterie);
+    await findmoteur.save(); 
+    
+    res.status(201).json(findmoteur);
+}
+exports.getreseautuyauteriebymoteur = async (req, res, next) => {
+    const moteur = await Moteur.findById(req.params.moteurId).populate("reseautuyauteries")
+    res.status(200).json(moteur.reseautuyauteries);
+}
+
+exports.addpressostattomoteur =  async (req, res, next) => { 
+    const newpressostat = new Pressostat (req.body); 
+    
+    const findmoteur = await  Moteur.findById(req.params.moteurId);
+    
+    newpressostat.moteur = findmoteur;
+    await newpressostat.save();
+
+    findmoteur.pressostat= newpressostat._id; 
+    await findmoteur.save();
+
+    res.status(201).json((findmoteur)); 
+}
+exports.getpressostatbymoteur = async (req, res, next) => {
+    const moteur = await Moteur.findById(req.params.moteurId).populate("pressostat")
+    res.status(200).json(moteur.pressostat);
 }

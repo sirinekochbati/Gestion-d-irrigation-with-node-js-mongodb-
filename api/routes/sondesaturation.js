@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Sondesaturation = require ("../models/sondesaturation");
+const historiquesondesaturation = require ("../models/historiquesondesaturation");
 const mongoose = require ('mongoose');
 const sondesaturationcontroller= require ('../controllers/sondesaturation');
 const ParcelleElementaire= require ('../controllers/parcelleElementaire');

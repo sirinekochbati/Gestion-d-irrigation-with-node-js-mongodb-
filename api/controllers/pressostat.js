@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const express = require('express');
 const router = express.Router();
 const Pressostat = require("../models/pressostat");
+const Moteur = require("../models/moteur");
 
 exports.pressostatgetall = async (req, res, next) => {
     const pressostat = await Pressostat.find({});
@@ -41,4 +42,21 @@ exports.deletepressostat = async (req, res, next) => {
 exports.deleteAll = async (req, res, next) => {
     const pressostat = await Pressostat.deleteMany();
     res.status(200).json('success');
+}
+exports.addmoteurtopressostat =  async (req, res, next) => { 
+    const newmoteur = new Moteur (req.body); 
+    
+    const findpressostat = await  Pressostat.findById(req.params.pressostatId);
+    
+    newmoteur.pressostat = findpressostat;
+    await newmoteur.save();
+
+    findpressostat.moteur= newmoteur._id; 
+    await findpressostat.save();
+
+    res.status(201).json((findpressostat)); 
+}
+exports.getmoteurbypressostat = async (req, res, next) => {
+    const pressostat = await Pressostat.findById(req.params.pressostatId).populate("moteur")
+    res.status(200).json(pressostat.moteur);
 }

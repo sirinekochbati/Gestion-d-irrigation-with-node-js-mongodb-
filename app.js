@@ -35,7 +35,9 @@ app.use((req, res, next) => {
     }
     next();
 });
-
+const historiquesondesaturationRoutes = require('./api/routes/historiquesondesaturation');
+const historiquebassinRoutes = require('./api/routes/historiquebassin');
+const ravitaillementRoutes = require('./api/routes/ravitaillement');
 const parcelleRoutes = require('./api/routes/parcelle');
 const moteurRoutes = require('./api/routes/moteur');
 const flotteurRoutes = require('./api/routes/flotteur');
@@ -56,7 +58,9 @@ app.use(morgan('dev'));
 
 
 //routes which should handle requests
-
+app.use('/ravitaillement', ravitaillementRoutes);
+app.use('/historiquebassin', historiquebassinRoutes);
+app.use('/historiquesondesaturation', historiquesondesaturationRoutes);
 app.use('/electrovanne', electrovanneRoutes);
 app.use('/stationfiltrage', stationfiltrageRoutes);
 app.use('/stationfertilization', stationfertilizationRoutes);

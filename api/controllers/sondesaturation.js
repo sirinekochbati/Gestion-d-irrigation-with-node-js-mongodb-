@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const express = require('express');
 const router = express.Router();
 const Sondesaturation = require("../models/sondesaturation");
+const Historiquesondesaturation = require("../models/historiquesondesaturation");
 const ParcelleElementaire = require("../models/parcelleElementaire");
 const { find } = require('../models/parcelleElementaire');
 
@@ -61,3 +62,4 @@ exports.getparcelleElementairebysondesaturation = async (req, res, next) => {
     const sondesaturation = await Sondesaturation.findById(req.params.sondesaturationId).populate("parcelleElementaire")
     res.status(200).json(sondesaturation.parcelleElementaire);
 }
+

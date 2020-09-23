@@ -1,8 +1,14 @@
 const mongoose = require('mongoose');
 const bassinSchema = mongoose.Schema ({
-    
-    niveau : {type: Number, required: true},
+
     capacity : {type: Number, required: true},
+    min : {type: Number, required: true},
+    max : {type: Number, required: true},
+    historiquebassins: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'historiquebassin'
+ 
+    }],
   
     moteurs: [{
         type: mongoose.Schema.Types.ObjectId,

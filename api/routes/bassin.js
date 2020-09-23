@@ -5,6 +5,7 @@ const Sondage = require ("../models/sondage");
 const Moteur = require ("../models/moteur");
 const mongoose = require ('mongoose');
 const bassincontroller= require ('../controllers/bassin');
+const Historiqueassin = require ("../models/historiquebassin");
 
 router.get('/',bassincontroller.bassingetall);
 router.post ('/', bassincontroller.newbassin);

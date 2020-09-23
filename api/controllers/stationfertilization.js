@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 const Stationfertilization = require("../models/stationfertilization");
 const ParcelleElementaire = require("../models/parcelleElementaire");
+const Ravitaillement = require("../models/ravitaillement");
 
 
 exports.stationfertilizationgetall = async (req, res, next) => {
@@ -60,4 +61,3 @@ exports.getparcelleElementairebystationfertilization = async (req, res, next) =>
     const stationfertilization = await Stationfertilization.findById(req.params.stationfertilizationId).populate("parcelleElementaires")
     res.status(200).json(stationfertilization.parcelleElementaires);
 }
-

@@ -4,6 +4,7 @@ const router = express.Router();
 const Bassin = require("../models/bassin");
 const Sondage = require ("../models/sondage");
 const Moteur = require ("../models/moteur");
+const Historiquebassin = require("../models/historiquebassin");
 
 exports.bassingetall = async (req, res, next) => {
     const bassin = await Bassin.find({});
@@ -78,3 +79,4 @@ exports.getmoteurbybassin = async (req, res, next) => {
     const bassin = await Bassin.findById(req.params.bassinId).populate("moteurs")
     res.status(200).json(bassin.moteurs);
 }
+

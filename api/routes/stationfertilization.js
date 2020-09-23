@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Stationfertilization = require ("../models/stationfertilization");
 const parcelleElementaire = require ("../models/parcelleElementaire");
+const Ravitaillement = require ("../models/ravitaillement");
 const mongoose = require ('mongoose');
 const stationfertilizationcontroller= require ('../controllers/stationfertilization');
 

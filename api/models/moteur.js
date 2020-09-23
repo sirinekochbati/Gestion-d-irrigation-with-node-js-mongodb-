@@ -19,7 +19,7 @@ const moteurSchema= mongoose.Schema ({
         ref: 'bassin'
  
     },
-    reseautuyauterie: [{
+    reseautuyauteries: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'reseautuyauterie'
  
